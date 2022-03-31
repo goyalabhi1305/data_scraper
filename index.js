@@ -12,7 +12,6 @@ const scrapeData = require('./routes/scrape');
 app.get('/', scrapeData)
 
 
-
 //Listen to server
 app.listen(port, () => {
     console.log(`Server Established and  running on Port ⚡${port}`)

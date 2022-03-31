@@ -1,14 +1,27 @@
-
 const axios = require('axios');
 const fs = require('fs');
 const scrapeData = async (req, res) => {
     try {
         const limit = 1000
-        const looplimit = 45
+        const looplimit = 1
 
+
+// appending users list data into previous list
+// fs.readFile('./scraped_data/all_creators.json', function (err, data) {
+//     // var json = JSON.parse(data)
+//     // json.push('search result: ' + currentSearchResult)
+//     if (err) throw err;
+//     console.log('File has been Read!');
+
+//     fs.writeFile("./scraped_data/all_creators.json", 'dfgdfgdg', (err) => {
+//         if (err) throw err;
+//         console.log('File has been created');
+//     })
+
+// })
 
         // create a loop that prints hello with 10 seconds delay
-        for (let i = 16; i < looplimit; i++) {
+        for (let i = 0; i < looplimit; i++) {
 
             const skip = i * limit
             console.log(`${i}--- ${skip}---${skip+limit}`);
@@ -36,21 +49,24 @@ const scrapeData = async (req, res) => {
 
             // console.log(result?.data)
             console.log(`Loop Running= Skipped:${skip}, till:${skip + 1000} , loopNumber:${i}, totalResults: ${result?.data?.campaign_profiles?.length}`)
-            console.log(all_registered_influencers_url);
+            // console.log(all_registered_influencers_url);
 
-            fs.writeFile(`${skip}_data_${skip + limit}.json`, JSON.stringify(result?.data), (err) => {
+            // creating new series files of data
+            fs.writeFile(`./scraped_data/all_data/${skip}_data_${skip + limit}.json`, JSON.stringify(result?.data), (err) => {
                 if (err) throw err;
                 console.log('File has been created');
             })
 
+            // appending users list data into previous list
+            // const AlluserId = result?.data?.campaign_profiles?.map(user => user.user_id)
+            // fs.appendFile("./scraped_data/all_creators.json", AlluserId , function (err) {
+            //     if (err) throw err;
+            //     console.log(`User Ids appended to file : ${AlluserId?.length}`);
+            //  });
+             
+
             // javascript wait for 10seconds
             await new Promise(resolve => setTimeout(resolve, 10000));
-            // setTimeout(() => {
-            //     console.log(`starting new loop`);
-            //     // console.log('Hello, world!', item)  // Visualisation.
-            //     // autoPlayer() // Call function again.
-            // }, 10000)
-
         }
 
 
