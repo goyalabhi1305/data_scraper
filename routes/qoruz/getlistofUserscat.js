@@ -3,7 +3,7 @@ const fs = require('fs');
 const axios = require('axios');
 const chalk = require('chalk');
 
-const fetch = async (pagenumber, platform) => {
+const fetch = async (pagenumber, platform,categoryid) => {
 	// return false;
 	try {
 		console.log(
@@ -13,7 +13,7 @@ const fetch = async (pagenumber, platform) => {
 		);
 
 		const result = await axios.get(
-			`https://data.qoruz.com/api/v2/search?search_id=1653553912&platform=${platform}&categories[]=1&location=83&page=${pagenumber}&sort_by=followers:desc`,
+			`https://data.qoruz.com/api/v2/search?search_id=1653553912&platform=${platform}&categories[]=${categoryid}&location=83&page=${pagenumber}&sort_by=followers:desc`,
 			{
 				headers: {
 					'User-Agent':
@@ -31,7 +31,7 @@ const fetch = async (pagenumber, platform) => {
 					Referer: 'https://app.qoruz.com/',
 					Origin: 'https://app.qoruz.com',
 					Authorization:
-						'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY5ZmE4ZGExYWI3YmQxMDI2Y2EyODY1ZDczOTcwMTVhMzMzYWQ3YmNjYTYwYTNhZTI0YjhmM2E4ZDc5Njc1Mjg3ZWYwODkzMzAzMjZmNGEzIn0.eyJhdWQiOiIxMSIsImp0aSI6IjY5ZmE4ZGExYWI3YmQxMDI2Y2EyODY1ZDczOTcwMTVhMzMzYWQ3YmNjYTYwYTNhZTI0YjhmM2E4ZDc5Njc1Mjg3ZWYwODkzMzAzMjZmNGEzIiwiaWF0IjoxNjU0OTQwNTg3LCJuYmYiOjE2NTQ5NDA1ODcsImV4cCI6MTY4NjQ3NjU4Nywic3ViIjoiMTExMjkiLCJzY29wZXMiOltdfQ.hmAWuZE12Fvy9e6rJIsRHkeK9BrA6JBJ6KFG9iAaElBz5YjX3toM45EjAYM4K3Gv4OEvZo_cehzsNNvPtR34neaa0StAnnocLPgafja1-aSxPpCCMR2_p80Kx8aZi8Ca0_MKgmsUB6HCbeeBYWeG6KTbvTNOCWM5DUqoDNcBE9FXhjctx_WrKpSe1wuRwyzoaj5WpWS2EIl7Y04kbqh_sLg0htg102B_LveaO8KUlAZdBngwqWm1LpptjsrRS8jxQmYHFCN64DuzjKVZiCM74rlLkxohwx9aKX1iBxBjIxo0Mbv5TFtyK-t9JSU1TrvJ7DJuTZEIbczc8TYHiPM55zu3nLQ_KQ4J0Zs1sKMFcvzefjW8aOSeZawzdAx-szMcOP0fbfHgwWsRV7TPKxqGC3aYNPpsGIxPnJNsQATnlmOVBdhPRS_01GZsiDp7CyuRdVhdbYpaHzz74_ijUyfRGrE0l8zwOBlWcl5HuiHEPU2nPumepmWoVxKjevKWTtO1FZUB922dADBkJoCUzrPbQtcc-wQ1lWlm-JOIye6QVANeGS__rZdiVJ-jmq8jG_S6uZUwQGU-_QJHIw6ZKqFV9hu7UrfkDVNtc2_4cUUFOTUrt-AmIVa8oFRjubNSj7UnSxqcsv5qjtvKpE64QQWNRiOVFPYn4FzrpsgS7JQ3jUU',
+						'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk5MGJiZjg4YWYyZTQwYjRlYjAwN2ZkYzkyZTYyYjg2Nzc2NTQ0YjA3N2M0MTVmNDZmMzUzNThkNGZlZTM3ODEzNjNkNGQwNWE0ZTNjOTI0In0.eyJhdWQiOiIxMSIsImp0aSI6Ijk5MGJiZjg4YWYyZTQwYjRlYjAwN2ZkYzkyZTYyYjg2Nzc2NTQ0YjA3N2M0MTVmNDZmMzUzNThkNGZlZTM3ODEzNjNkNGQwNWE0ZTNjOTI0IiwiaWF0IjoxNjU0OTM5ODI1LCJuYmYiOjE2NTQ5Mzk4MjUsImV4cCI6MTY4NjQ3NTgyNSwic3ViIjoiMTExMjUiLCJzY29wZXMiOltdfQ.GNCn_xDWBC1uQrvQRYce9alqmoz2DSz9RFtbgK47KE3yuuSJjT34Ydxrum-d-qABUmZ9SYSRqG-pU_Qa7ixRGh61dAcCcIKzVbmCRP36B401x5pconHZihSO9_yVH_CiwsdYsLk7iH6MsCtyAgQQDerDCT9pzf26Ndq7bW9M6gcuBtNlmKKlJ_byTFyZ1DRHFfHH5gv-s8GFcoYFCPvOEje2gPqENoAG9wsWEFQYIK05NKdejGo52zJD4qPrpzGbaUIC5XsOVy_IGmjXlt11tdVjc1g6Y9B9PMqCHS9LrG_isDmbmuyAKY0LJx0xzp34O23um-0Q8tsgCM2ggDh7iBQtNynFm2F-Txas-gMue7xP72_8ndc7p1xysuhelbELzLOYEk9pEA0lqyRqYT6m78eo9InInQVNymrxY07jXMFz6OjGfv_hsTKqWdCnXga9oolLyGSIMJ_88ZGukQADOpZzf326O4hgyyBGxG_XIKybZg0inEmruG_RyQER8_2XCumSgQpLckfWgviNLOhbat6dQmSW0QyJLKJOBIRAVFbl6ocvNveZDjxEL4WmjacoQ7Ga2JgLWeWD_ESdvASOf_iOl7zYgfGBwC5_5dw6l62TREXiTxwH0uwNB_SufAR0bxfytNxcrVB5sos3LkKieEknB6TpjeKTqpZxoLGzc-A',
 				},
 			}
 		);
@@ -39,7 +39,7 @@ const fetch = async (pagenumber, platform) => {
 		//     data:'sfdsdf'
 		// }
 
-		const path_tosave = `../data_scraper/scraped_data/qoruz/listprofiles/cat_1/cat_1_${platform}_${pagenumber}.json`;
+		const path_tosave = `../data_scraper/scraped_data/qoruz/listprofiles/cat_${categoryid}/cat_${categoryid}_${platform}_${pagenumber}.json`;
 		fs.writeFile(path_tosave, JSON.stringify(result?.data), (err) => {
 			if (err) throw err;
 			console.log(
@@ -68,10 +68,10 @@ const fetch = async (pagenumber, platform) => {
 
 // for loop to get all pages of each platform
 (async () => {
-	for (let i = 309; i <= 477; i++) {
-		await fetch(i, 'instagram');
-		// console.log(`Page ${i} is being fetched...`);
-		await new Promise((resolve) => setTimeout(resolve, 20000));
+	for (let i = 1; i <= 46; i++) {
+		const categoryid = 3;
+		await fetch(i, 'instagram',categoryid);
+		await new Promise((resolve) => setTimeout(resolve, 2500));
 	}
 })();
 // fetch(8,'instagram');
