@@ -65,7 +65,7 @@ const fetch = async (pagenumber) => {
 
 // for loop to get all pages of each platform // total pages: 9733
 (async () => {
-	for (let i = 9496; i <= 9499; i++) {
+	for (let i = 9496; i <= 9679; i++) {
 		await fetch(i);
 		// console.log(`Page ${i} is being fetched...`);
 		await new Promise((resolve) => setTimeout(resolve, 5000));
