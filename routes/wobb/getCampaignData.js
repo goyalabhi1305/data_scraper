@@ -45,18 +45,19 @@ try{
     const result = await axios.get(`https://api.wobb.ai/api/dashboardv2/getcampaign?campaignId=${campaignid}`, {
         headers: {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36',
-            'Accept': '*/*',
+            'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'en-US,en;q=0.9',
-            // 'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
-            'Sec-Fetch-Site': 'cross-site',
+            // 'Sec-Fetch-Site': 'cross-site',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Dest': 'empty',
-            'DNT': '1',
+            // 'DNT': '1',
             'Pragma': 'no-cache',
             'Cache-Control': 'no-cache',
             'Referer': 'https://dashboard.wobb.ai/',
             'Origin': 'https://dashboard.wobb.ai',
+            'Cookie':'connect.sid=s%3AV_lIrdk5uzSdWUDGBJ66v95CUBtq1Tl9.tenAxCVVfWOztIbb6KQ%2B8G7%2FokkqmETJY%2FPmzJ6Oo0c'
         },
     })
     // const result = {
@@ -79,7 +80,7 @@ catch(e){
 
 // ---------------------------------------------
 
-const fetchAllData = async ()=>{
+const fetchAllData = async (res)=>{
 
     for (let i = 5; i < campaignsArr.length; i++) {
         const campaignid =campaignsArr[i]
@@ -92,6 +93,8 @@ const fetchAllData = async ()=>{
 await new Promise(resolve => setTimeout(resolve, 10000));
     
     }
+    res.status(200).json({ msg: 'good' })
 }
+
 
 fetchAllData()
