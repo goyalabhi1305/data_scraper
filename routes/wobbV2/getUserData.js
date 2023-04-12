@@ -16,9 +16,23 @@ const headers = {
 
 const fetchData = async (req,res) => {
   try {
+    //incerement page number by 1000 and
+    // const pageNo = 0;
+    // const pageSize = 30500;
+    // const filter = 'undefined';
+    // const url = `https://prod.wobb.ai/api/discovery/?filter=${filter}&pageNo=${pageNo}&pageSize=${pageSize}`;
+    var pageNo = 0;
+    var pageSize = 1;
+
+    for (let i = 0; i < 610; i++) {
+    
+       pageNo = pageNo + 1;
+       pageSize = pageSize + 50;
+        const filter = 'undefined';
+  
     const response = await axios({
       method: 'post',
-      url: 'https://prod.wobb.ai/api/discovery/?filter=undefined&pageNo=0&pageSize=30500',
+      url: `https://prod.wobb.ai/api/discovery/?filter=${filter}&pageNo=${pageNo}&pageSize=${pageSize}`,
       headers: headers
     });
     const data = response.data;
@@ -28,7 +42,7 @@ const fetchData = async (req,res) => {
       console.log('Result saved in result.json');
     });
     res.status(200).json({ msg: 'good' });
-
+  }
     
   } catch (error) {
     console.error(error);
