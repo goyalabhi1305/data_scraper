@@ -2,51 +2,30 @@ const fs = require('fs');
 const axios = require('axios');
 
 const headers = {
-  'Cookie': 'connect.sid=s%3AV_lIrdk5uzSdWUDGBJ66v95CUBtq1Tl9.tenAxCVVfWOztIbb6KQ%2B8G7%2FokkqmETJY%2FPmzJ6Oo0c',
-  'Content-Type': 'text/plain',
-  'Accept-Encoding': 'gzip, deflate, br',
-  'Connection': 'keep-alive',
-  'Accept': 'application/json, text/plain, */*',
-  'Origin': 'https://wobb.ai',
-  'Referer': 'https://wobb.ai/',
-  'Sec-Fetch-Dest': 'empty',
-  'Sec-Fetch-Mode': 'cors',
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'
+  // headers omitted for brevity
 };
 
-const fetchData = async (req,res) => {
+const fetchData = async (req, res) => {
   try {
-    //incerement page number by 1000 and
-    // const pageNo = 0;
-    // const pageSize = 30500;
-    // const filter = 'undefined';
-    // const url = `https://prod.wobb.ai/api/discovery/?filter=${filter}&pageNo=${pageNo}&pageSize=${pageSize}`;
-    var pageNo = 0;
-    var pageSize = 1;
+    let total = 10;
 
-    for (let i = 0; i < 610; i++) {
-    
-       pageNo = pageNo + 1;
-       pageSize = pageSize + 50;
-        const filter = 'undefined';
-  
-    const response = await axios({
-      method: 'post',
-      url: `https://prod.wobb.ai/api/discovery/?filter=${filter}&pageNo=${pageNo}&pageSize=${pageSize}`,
-      headers: headers
-    });
-    const data = response.data;
+    for (let i = 1; i <= total; i++) {
+      const url = `https://prod.wobb.ai/api/discovery/?filter=undefined&pageNo=${i}&pageSize=50`;
+      const response = await axios.post(url, { headers });
+      const data = JSON.stringify(response.data);
+      const path_tosave = `../data_scraper/scraped_data/wobb/campaigns/all_${i}.json`;
 
-    fs.writeFile('finalresult.json', JSON.stringify(data), err => {
-      if (err) throw err;
-      console.log('Result saved in result.json');
-    });
-    res.status(200).json({ msg: 'good' });
-  }
-    
+      await fs.promises.writeFile(path_tosave, data);
+      console.log(`Page ${i} has been fetched and saved successfully.`);
+
+      await new Promise(resolve => setTimeout(resolve, 10000));
+    }
+
+    console.log(`All pages (${total}) have been fetched and saved successfully.`);
   } catch (error) {
     console.error(error);
+    res.status(400).json({ msg: 'error' });
   }
 };
 
-module.exports= fetchData;
+module.exports = fetchData;
