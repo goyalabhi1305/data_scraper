@@ -23,7 +23,7 @@ const insertIntoDB = async (data) => {
 };
 
 (async () => {
-	for (let i = 24412; i <= 32000; i++) {
+	for (let i = 20000; i <= 32000; i++) {
 		try {
 			const name_file = `data_${i * 50 + 1}_${i * 50 + 51}`;
 			console.log(chalk.yellowBright(`🟡 [${i}]: Processing ${name_file}...`));

@@ -77,14 +77,14 @@ const InfluencerSchema = mongoose.Schema({
 		post_reach_percent: {
 			type: Number,
 		},
-        // new fields
-        following:{
-            type: Number,
-        },
-        numPosts:{
-            type: Number,
-        },
-        // new fields end
+		// new fields
+		following: {
+			type: Number,
+		},
+		numPosts: {
+			type: Number,
+		},
+		// new fields end
 	},
 	profile_display_name: {
 		type: String,
@@ -179,18 +179,10 @@ const InfluencerSchema = mongoose.Schema({
 	gender: {
 		type: String,
 	},
-	language: [
-		{
-			name: {
-				type: String,
-			},
-			code: {
-				type: String,
-			},
-		},
-	],
+	language: [{ type: String }],
 	dateOfBirth: {
 		type: Date,
+		default: null,
 	},
 	bioSection: {
 		type: String,
@@ -200,7 +192,7 @@ const InfluencerSchema = mongoose.Schema({
 			{
 				type: {
 					type: String,
-                    default: 'general'
+					default: 'general',
 				},
 				number: {
 					type: String,
@@ -211,7 +203,7 @@ const InfluencerSchema = mongoose.Schema({
 			{
 				type: {
 					type: String,
-                    default: 'general'
+					default: 'general',
 				},
 				number: {
 					type: String,
@@ -221,9 +213,9 @@ const InfluencerSchema = mongoose.Schema({
 	},
 	fullName: {
 		type: String,
-	}
+	},
 });
 
-InfluencerSchema.index({ '$**': 1 });
+// InfluencerSchema.ensureIndex( { "profile_display_name": 1 }, { unique: true } )
 
 module.exports = mongoose.model('influencers', InfluencerSchema);
