@@ -7,9 +7,10 @@ const port = process.env.PORT || 4000;
 // const fs = require('fs');
 // const writeStream = fs.createWriteStream('devBlog.csv');
 
-const scrapeData = require('./routes/scrape');
+// const scrapeData = require('./routes/scrape');
+const Wobbv2_Getuserdata = require('./routes/wobbV2/getUserData')
 
-app.get('/', scrapeData)
+app.post('/',Wobbv2_Getuserdata )
 
 
 //Listen to server
