@@ -20,8 +20,6 @@ const  data_db = async (req, res) => {
                 'profileImage.url': data.accountDetails.profile_pic,
                 bio:data.accountDetails.biography,
                 contentCategories:data.categories,
-                
-
             });
             await user.save();
     
