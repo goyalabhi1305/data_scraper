@@ -69,12 +69,23 @@ const fetch = async (pagenumber) => {
 		);
 
 		const path_tosave = `../data_scraper/scraped_data/gcc/listinsta/data_${pagenumber}_${pagenumber+50}.json`;
+		const path_notsave = `../data_scraper/scraped_data/gcc/notlistinsta/notsave_${pagenumber}_${pagenumber+50}.json`;
+		if(!result){
+			//save the page number to notsave file
+			fs.writeFile(path_notsave, JSON.stringify(result?.data), (err) => {
+				if (err) throw err;
+				console.log(
+					`${chalk.redBright(`❌ Page ${pagenumber} to ${pagenumber+50} is not saved!`)}`
+				);
+			});
+		}
 		fs.writeFile(path_tosave, JSON.stringify(result?.data), (err) => {
 			if (err) throw err;
 			console.log(
 				`${chalk.green(`🟢 Successfully Page ${pagenumber} to ${pagenumber+50} is saved!`)}`
 			);
 		});
+
 		// console.log(result?.data,'-------')
 		// console.log(result?.status,'*********')
 	} catch (e) {
@@ -91,7 +102,7 @@ const fetch = async (pagenumber) => {
 		const skip = i * 50 + 1;
 		console.log(chalk.bgYellowBright(`🟡 Page ${i} is being scraped...`));
 		await fetch(skip);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
+		await new Promise((resolve) => setTimeout(resolve, 5000));
 	}
 })();
 // fetch(8,'instagram');

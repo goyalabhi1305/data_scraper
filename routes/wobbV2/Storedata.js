@@ -1,7 +1,8 @@
 //store data in db
 
-const db = require('../db');
+const db = require('../../db/db');
 const influncers = require('../../models/influencers');
+
 
 const  data_db = async (req, res) => {
     try{
@@ -11,6 +12,7 @@ const  data_db = async (req, res) => {
             const data = require(path_tosave);
             console.log(data);
             const user = new influncers({
+                _id : data._id,
                 name: data.name,
                 username: data.username,
                 email: data.profile.address.email,
@@ -34,5 +36,8 @@ const  data_db = async (req, res) => {
 
 }
 
+
 data_db();
+module.exports = data_db;
+
     

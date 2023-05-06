@@ -68,7 +68,7 @@ const fetch = async (pagenumber) => {
 			}
 		);
 
-		const path_tosave = `../data_scraper/scraped_data/gcc/listinsta/data_${pagenumber}_${pagenumber+50}.json`;
+		const path_tosave = `../data_scraper/scraped_data/gcc/listinsta_above20k/data_${pagenumber}_${pagenumber+50}.json`;
 		fs.writeFile(path_tosave, JSON.stringify(result?.data), (err) => {
 			if (err) throw err;
 			console.log(
