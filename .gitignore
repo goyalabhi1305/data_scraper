@@ -3,3 +3,5 @@ node_modules/
 scraped_data/
 
 *.rar
+
+._*
